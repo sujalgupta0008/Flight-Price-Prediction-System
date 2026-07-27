@@ -1,0 +1,94 @@
+{
+  "theme": "Dark Futuristic (Crystal Glassmorphism + Neon Accents)",
+  "typography": {
+    "headings": {
+      "fontFamily": "'Outfit', sans-serif",
+      "weights": [300, 500, 700],
+      "usage": "Hero title, large price predictions, form section titles"
+    },
+    "body": {
+      "fontFamily": "'Manrope', sans-serif",
+      "weights": [400, 600],
+      "usage": "Form labels, general UI text, select dropdowns"
+    },
+    "data_and_numbers": {
+      "fontFamily": "'JetBrains Mono', monospace",
+      "weights": [400, 700],
+      "usage": "Dates, times, predicted price output, input values"
+    },
+    "imports": [
+      "@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Manrope:wght@400;600&family=Outfit:wght@300;500;700&display=swap');"
+    ]
+  },
+  "colors": {
+    "background": {
+      "base": "#030407",
+      "gradient": "radial-gradient(circle at 20% 20%, rgba(124, 92, 255, 0.1), transparent 40%), radial-gradient(circle at 80% 80%, rgba(0, 240, 255, 0.1), transparent 40%)"
+    },
+    "surface": {
+      "glass": "rgba(255, 255, 255, 0.03)",
+      "glassHover": "rgba(255, 255, 255, 0.05)",
+      "glassBorder": "rgba(255, 255, 255, 0.08)",
+      "inputBg": "rgba(0, 0, 0, 0.4)",
+      "inputBorder": "rgba(255, 255, 255, 0.1)"
+    },
+    "accent": {
+      "primary": "#00F0FF",
+      "primaryGlow": "rgba(0, 240, 255, 0.4)",
+      "secondary": "#7C5CFF",
+      "secondaryGlow": "rgba(124, 92, 255, 0.4)"
+    },
+    "text": {
+      "primary": "#FFFFFF",
+      "secondary": "rgba(255, 255, 255, 0.6)",
+      "placeholder": "rgba(255, 255, 255, 0.3)",
+      "price": "#00F0FF"
+    }
+  },
+  "layouts": {
+    "page_structure": "Asymmetrical split. Do NOT use a centered card. Left side (60% width on desktop): 3D Interactive Background (Globe.gl). Right side (40% width on desktop): Floating Glassmorphism Form container aligned vertically center. On mobile: stack them with 3D fixed in background, form scrolling over.",
+    "form_grid": "Use a Bento-style CSS Grid inside the form. 'display: grid; grid-template-columns: 1fr 1fr; gap: 16px;'.\nRow 1: Airline (span 2).\nRow 2: Source (span 1), Destination (span 1).\nRow 3: Journey Date (span 1), Total Stops (span 1).\nRow 4: Departure Time (span 1), Arrival Time (span 1).\nRow 5: Predict Button (span 2).\nRow 6: Result Box (span 2).",
+    "spacing": "Generous spacing. Form padding: 40px (p-10). Input padding: 16px. Border radius for form: 24px. Border radius for inputs: 12px."
+  },
+  "visual_enhancers": {
+    "glassmorphism": "Form container MUST have 'backdrop-filter: blur(24px) saturate(150%);' and 'border: 1px solid var(--glassBorder);'. Do NOT use fully transparent backgrounds.",
+    "glowing_accents": "Inputs on :focus must have 'box-shadow: 0 0 0 1px #00F0FF, 0 0 12px rgba(0, 240, 255, 0.2);' and 'border-color: #00F0FF'.",
+    "button_styling": "Predict button must have a linear gradient background (from #7C5CFF to #00F0FF) and a strong hover glow: 'box-shadow: 0 8px 32px rgba(0, 240, 255, 0.4)'.",
+    "micro_interactions": "All inputs use 'transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;'. Button hover uses 'transform: translateY(-2px);' and 'filter: brightness(1.1);'."
+  },
+  "3d_libraries": {
+    "library": "Globe.gl (Vanilla JS)",
+    "integration": "Include `<script src=\"//unpkg.com/globe.gl\"></script>` in HTML. Mount it to a `#globe-container` positioned absolute/fixed covering the screen (z-index: -1).",
+    "styling": "Configure Globe.gl: `globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg')`, `backgroundColor('rgba(0,0,0,0)')`. Optional: add some simulated arcs (flight paths) across the globe to match the flight prediction theme."
+  },
+  "images": {
+    "background_fallback": {
+      "url": "https://images.unsplash.com/photo-1689443111130-6e9c7dfd8f9e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA4Mzl8MHwxfHNlYXJjaHwxfHxkYXJrJTIwYWJzdHJhY3QlMjB0ZWNoJTIwYmFja2dyb3VuZHxlbnwwfHx8fDE3ODUxNTAyMDl8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Dark purple geometric tech background (Use as a CSS background if WebGL fails to load or behind the globe for depth)."
+    }
+  },
+  "instructions_to_main_agent": [
+    "You are updating a Flask application. Modify the HTML/CSS/JS templates, keeping Flask backend routing strictly intact.",
+    "Do NOT introduce React, Vue, or Shadcn. Stick to pure HTML, vanilla CSS (with CSS variables), and vanilla JavaScript.",
+    "The UI MUST NOT be a basic centered card. Execute the asymmetrical layout specified in the layouts section.",
+    "Add Globe.gl via CDN to the JS file/HTML to render the 3D globe. Place the canvas in a fixed container.",
+    "Implement the 'Crystal Glass' glassmorphism for the prediction form (blur, translucent background, subtle border).",
+    "Inputs must be styled natively. Override default browser `<select>` and `<input type='date'>` styles. Add 'color-scheme: dark;' to the root so browser-native UI components match the dark theme.",
+    "Make the prediction result box pop with a distinct glowing border, styled with JetBrains Mono font when a prediction price is returned.",
+    "Include 'data-testid' attributes on all inputs, select elements, the submit button, and the result display element."
+  ],
+  "accessibility": [
+    "Ensure contrast ratios meet WCAG AA. Text on glass must be white or light gray.",
+    "All inputs must have visible `<label>` tags.",
+    "Focus states must be highly visible (neon glow).",
+    "Use 'color-scheme: dark;' on the body/root."
+  ],
+  "universal_guidelines_for_main_agent": [
+    "Avoid generic centered layouts. Create depth with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "Never apply universal transition (e.g., transition: all). Target specific properties like box-shadow, border-color, transform.",
+    "Include hover states and micro-animations on interactive elements.",
+    "Do not use emojis for icons. Use SVGs or a lightweight icon library if necessary.",
+    "Include 'data-testid' attributes for robust automated testing."
+  ]
+}
