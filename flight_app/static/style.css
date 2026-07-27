@@ -1,0 +1,552 @@
+/* ===========================
+   AeroPredict — Dark Futuristic UI
+=========================== */
+
+:root {
+    --bg-base: #030407;
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-hover: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --input-bg: rgba(0, 0, 0, 0.4);
+    --input-border: rgba(255, 255, 255, 0.1);
+    --cyan: #00F0FF;
+    --cyan-glow: rgba(0, 240, 255, 0.4);
+    --purple: #7C5CFF;
+    --purple-glow: rgba(124, 92, 255, 0.4);
+    --text: #FFFFFF;
+    --text-dim: rgba(255, 255, 255, 0.6);
+    --text-faint: rgba(255, 255, 255, 0.3);
+    color-scheme: dark;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+::selection {
+    background: var(--cyan);
+    color: #030407;
+}
+
+body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--bg-base);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ===========================
+   Background layers
+=========================== */
+
+#globe-container {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+}
+
+#globe-container canvas {
+    outline: none;
+}
+
+.bg-vignette {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(124, 92, 255, 0.12), transparent 42%),
+        radial-gradient(circle at 82% 80%, rgba(0, 240, 255, 0.08), transparent 42%),
+        linear-gradient(to right, rgba(3, 4, 7, 0.1) 0%, rgba(3, 4, 7, 0.55) 68%, rgba(3, 4, 7, 0.8) 100%);
+}
+
+.bg-grid {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+/* ===========================
+   Layout — asymmetric split
+=========================== */
+
+.page {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 48px;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 64px 56px;
+    min-height: 100vh;
+    align-items: center;
+}
+
+/* ===========================
+   Hero (left)
+=========================== */
+
+.hero {
+    max-width: 640px;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--cyan);
+    margin-bottom: 32px;
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 12px var(--cyan-glow);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.75); }
+}
+
+.hero-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    font-size: clamp(44px, 5.2vw, 76px);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+}
+
+.gradient-text {
+    font-weight: 700;
+    background: linear-gradient(92deg, var(--purple) 0%, var(--cyan) 70%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-sub {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text-dim);
+    max-width: 480px;
+    margin-bottom: 56px;
+}
+
+.hero-stats {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.stat-label {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+}
+
+.stat-divider {
+    width: 1px;
+    height: 44px;
+    background: var(--glass-border);
+}
+
+/* ===========================
+   Glass panel (right)
+=========================== */
+
+.panel-wrap {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.glass-panel {
+    width: 100%;
+    max-width: 520px;
+    padding: 40px;
+    border-radius: 24px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
+    position: relative;
+}
+
+.glass-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.35), transparent 30%, transparent 70%, rgba(124, 92, 255, 0.35));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.panel-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.panel-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, rgba(124, 92, 255, 0.2), rgba(0, 240, 255, 0.15));
+    border: 1px solid var(--glass-border);
+    color: var(--cyan);
+    flex-shrink: 0;
+}
+
+.panel-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.panel-head h2 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+}
+
+.panel-head p {
+    font-size: 13px;
+    color: var(--text-faint);
+    margin-top: 2px;
+}
+
+/* ===========================
+   Form — bento grid
+=========================== */
+
+#predict-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.span-2 {
+    grid-column: span 2;
+}
+
+.field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+}
+
+.control select,
+.control input {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.control {
+    position: relative;
+}
+
+.control select {
+    cursor: pointer;
+    padding-right: 40px;
+}
+
+.control:has(select)::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 1.5px solid var(--text-dim);
+    border-bottom: 1.5px solid var(--text-dim);
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+    transition: border-color 0.3s ease;
+}
+
+.control:has(select:focus)::after {
+    border-color: var(--cyan);
+}
+
+.control select option {
+    background: #0a0d14;
+    color: var(--text);
+}
+
+.control input::-webkit-calendar-picker-indicator {
+    filter: invert(0.6);
+    cursor: pointer;
+}
+
+.control select:hover,
+.control input:hover {
+    background: rgba(0, 0, 0, 0.55);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.control select:focus,
+.control input:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 1px var(--cyan), 0 0 12px rgba(0, 240, 255, 0.2);
+}
+
+.control select:invalid {
+    color: var(--text-faint);
+}
+
+/* ===========================
+   Button
+=========================== */
+
+.predict-btn {
+    margin-top: 12px;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(92deg, var(--purple), var(--cyan));
+    color: #04060c;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+.predict-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+    box-shadow: 0 8px 32px rgba(0, 240, 255, 0.4);
+}
+
+.predict-btn:active {
+    transform: translateY(0);
+}
+
+.btn-arrow {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.25s ease;
+}
+
+.predict-btn:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+.btn-loader {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(4, 6, 12, 0.3);
+    border-top-color: #04060c;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.predict-btn.loading .btn-arrow,
+.predict-btn.loading .btn-text {
+    display: none;
+}
+
+.predict-btn.loading .btn-loader {
+    display: block;
+}
+
+.predict-btn.loading {
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+/* ===========================
+   Result
+=========================== */
+
+.result {
+    margin-top: 24px;
+    padding: 26px 24px;
+    border-radius: 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.07), rgba(124, 92, 255, 0.07));
+    border: 1px solid rgba(0, 240, 255, 0.35);
+    box-shadow: 0 0 32px rgba(0, 240, 255, 0.12), inset 0 0 24px rgba(0, 240, 255, 0.04);
+    animation: resultIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes resultIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.result-label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+}
+
+.result-price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--cyan);
+    text-shadow: 0 0 24px rgba(0, 240, 255, 0.5);
+}
+
+.result-scan {
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(0, 240, 255, 0.12), transparent);
+    animation: scan 2.8s ease-in-out infinite;
+}
+
+@keyframes scan {
+    0% { left: -60%; }
+    60%, 100% { left: 120%; }
+}
+
+/* ===========================
+   Entrance reveals
+=========================== */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: reveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-badge.reveal { animation-delay: 0.1s; }
+.hero-title.reveal { animation-delay: 0.22s; }
+.hero-sub.reveal { animation-delay: 0.34s; }
+.hero-stats.reveal { animation-delay: 0.46s; }
+.glass-panel.reveal { animation-delay: 0.3s; }
+
+@keyframes reveal {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width: 1080px) {
+    .page {
+        grid-template-columns: 1fr;
+        gap: 56px;
+        padding: 56px 28px;
+    }
+
+    .panel-wrap {
+        justify-content: center;
+    }
+
+    .hero {
+        max-width: 100%;
+        text-align: left;
+    }
+}
+
+@media (max-width: 560px) {
+    .page {
+        padding: 40px 18px;
+    }
+
+    .glass-panel {
+        padding: 28px 22px;
+    }
+
+    #predict-form {
+        grid-template-columns: 1fr;
+    }
+
+    .span-2 {
+        grid-column: span 1;
+    }
+
+    .hero-stats {
+        gap: 20px;
+    }
+
+    .stat-value {
+        font-size: 22px;
+    }
+
+    .result-price {
+        font-size: 30px;
+    }
+}

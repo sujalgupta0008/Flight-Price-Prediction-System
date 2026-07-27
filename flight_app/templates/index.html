@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroPredict — Flight Price Predictor</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Manrope:wght@400;600&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- 3D Globe background -->
+    <div id="globe-container" data-testid="globe-background"></div>
+    <div class="bg-vignette"></div>
+    <div class="bg-grid"></div>
+
+    <main class="page">
+
+        <!-- ===== Left : Hero ===== -->
+        <section class="hero">
+            <div class="hero-badge reveal" data-testid="hero-badge">
+                <span class="pulse-dot"></span>
+                AI-POWERED PRICE ENGINE
+            </div>
+
+            <h1 class="hero-title reveal">
+                Know your fare<br>
+                <span class="gradient-text">before you fly.</span>
+            </h1>
+
+            <p class="hero-sub reveal">
+                Machine-learning model trained on thousands of real flight
+                records across India — predicting your ticket price in milliseconds.
+            </p>
+
+            <div class="hero-stats reveal">
+                <div class="stat">
+                    <span class="stat-value">10K+</span>
+                    <span class="stat-label">Flights analysed</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">92%</span>
+                    <span class="stat-label">Model accuracy</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">&lt;1s</span>
+                    <span class="stat-label">Prediction time</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Right : Glass form ===== -->
+        <section class="panel-wrap">
+            <div class="glass-panel reveal" data-testid="prediction-panel">
+
+                <div class="panel-head">
+                    <div class="panel-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Predict your fare</h2>
+                        <p>Fill flight details below</p>
+                    </div>
+                </div>
+
+                <form action="/predict" method="POST" id="predict-form" data-testid="predict-form">
+
+                    <div class="field span-2">
+                        <label for="airline">Airline</label>
+                        <div class="control">
+                            <select name="airline" id="airline" required data-testid="airline-select">
+                                <option value="">Select Airline</option>
+                                <option>IndiGo</option>
+                                <option>Air India</option>
+                                <option>Jet Airways</option>
+                                <option>SpiceJet</option>
+                                <option>Vistara</option>
+                                <option>GoAir</option>
+                                <option>Multiple carriers</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="source">Source</label>
+                        <div class="control">
+                            <select name="source" id="source" required data-testid="source-select">
+                                <option value="">From</option>
+                                <option>Delhi</option>
+                                <option>Mumbai</option>
+                                <option>Kolkata</option>
+                                <option>Chennai</option>
+                                <option>Banglore</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="destination">Destination</label>
+                        <div class="control">
+                            <select name="destination" id="destination" required data-testid="destination-select">
+                                <option value="">To</option>
+                                <option>Cochin</option>
+                                <option>Delhi</option>
+                                <option>Hyderabad</option>
+                                <option>Banglore</option>
+                                <option>Kolkata</option>
+                                <option>New Delhi</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="journey_date">Journey Date</label>
+                        <div class="control">
+                            <input type="date" name="journey_date" id="journey_date" required data-testid="journey-date-input">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="stops">Total Stops</label>
+                        <div class="control">
+                            <select name="stops" id="stops" required data-testid="stops-select">
+                                <option value="">Select Stops</option>
+                                <option>non-stop</option>
+                                <option>1 stop</option>
+                                <option>2 stops</option>
+                                <option>3 stops</option>
+                                <option>4 stops</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="dep_time">Departure Time</label>
+                        <div class="control">
+                            <input type="time" name="dep_time" id="dep_time" required data-testid="departure-time-input">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="arrival_time">Arrival Time</label>
+                        <div class="control">
+                            <input type="time" name="arrival_time" id="arrival_time" required data-testid="arrival-time-input">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="predict-btn span-2" id="predict-btn" data-testid="predict-button">
+                        <span class="btn-text">Predict Price</span>
+                        <span class="btn-loader"></span>
+                        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+
+                </form>
+
+                {% if prediction_text %}
+                <div class="result span-2" data-testid="prediction-result">
+                    <span class="result-label">Estimated Flight Price</span>
+                    <h2 class="result-price" data-testid="prediction-price">{{ prediction_text }}</h2>
+                    <div class="result-scan"></div>
+                </div>
+                {% endif %}
+
+            </div>
+        </section>
+
+    </main>
+
+    <script src="https://unpkg.com/globe.gl"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
