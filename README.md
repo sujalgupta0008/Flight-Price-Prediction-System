@@ -30,7 +30,7 @@ Flight ticket prices change continuously based on multiple factors such as:
 * 🔁 Number of Stops
 * 📆 Days Before Departure
 
-This project transforms raw flight data into meaningful business insights using **Data Cleaning, Exploratory Data Analysis, SQL Analysis, and Power BI Dashboard Development**.
+This project transforms raw flight data into meaningful business insights using **Data Cleaning, Exploratory Data Analysis, SQL Analysis,Feature Engineering, Model Training, Model Deployment Power BI Dashboard Development and Website Deployement**.
 
 The final dashboard provides an interactive experience to understand pricing trends and identify factors affecting flight costs.
 
