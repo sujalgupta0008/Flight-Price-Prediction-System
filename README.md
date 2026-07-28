@@ -30,7 +30,7 @@ Flight ticket prices change continuously based on multiple factors such as:
 * 🔁 Number of Stops
 * 📆 Days Before Departure
 
-This project transforms raw flight data into meaningful business insights using **Data Cleaning, Exploratory Data Analysis, SQL Analysis,Feature Engineering, Model Training, Model Deployment Power BI Dashboard Development and Website Deployement**.
+This project transforms raw flight data into meaningful business insights using **Data Cleaning, Exploratory Data Analysis, SQL Analysis, Feature Engineering, Model Training, Model Deployment, Power BI Dashboard Development and Website Deployment**.
 
 The final dashboard provides an interactive experience to understand pricing trends and identify factors affecting flight costs.
 
@@ -230,40 +230,64 @@ Analyzes:
 * Arrival Time Pattern
 * Flight Duration vs Price
 
+---
+
 # 🤖 Machine Learning Workflow
 
 ## 1️⃣ Data Preprocessing
 
 Prepared data for ML by:
 
-✔ Handling missing values  
-✔ Feature encoding  
-✔ Feature engineering  
-✔ Data transformation  
+✔ Converting duration to minutes
+✔ Extracting departure/arrival hour features
+✔ One-Hot Encoding of categorical variables (Airline, Source, Destination, Stops, etc.)
+✔ Train-Test Split: **80% training / 20% testing**
 
+---
 
-## 2️⃣ Model Training
+## 2️⃣ Model Training & Results
 
-Built prediction models using:
+Three regression models were trained and evaluated on the same dataset:
 
-🤖 Regression Algorithms  
-🤖 Random Forest  
-🤖 Decision Tree  
-🤖 XGBoost  
+### 📊 Model Comparison
 
+| Model | MAE | RMSE | R² Score |
+|-------|-----|------|----------|
+| Linear Regression | ₹1,740.33 | ₹2,577.11 | 0.6817 |
+| Decision Tree | ₹988.78 | ₹2,150.57 | 0.7783 |
+| **Random Forest** ✅ | **₹903.83** | **₹1,892.43** | **0.8284** |
 
-## 3️⃣ Model Evaluation
+> **Random Forest** was selected as the final model — it achieved the highest R² Score of **0.8284** and the lowest prediction error of **₹903.83 MAE**, outperforming all other models across every metric.
 
-Evaluated performance using:
+---
 
-📊 MAE  
-📊 RMSE  
-📊 R² Score  
+## 3️⃣ Key Feature Importances
 
+The Random Forest model identified the most influential predictors of ticket price:
 
-## 4️⃣ Deployment
+🔹 **Duration** — longer flights generally cost more
+🔹 **Airline** — pricing varies significantly across carriers
+🔹 **Total Stops** — non-stop vs connecting flights drive major price differences
+🔹 **Destination** — route-specific demand affects pricing
+🔹 **Journey Month** — seasonal patterns influence fares
 
-Integrated the trained model into the application for real-time flight price prediction.
+---
+
+## 4️⃣ Model Evaluation
+
+Evaluated using:
+
+📊 MAE (Mean Absolute Error) — average prediction error in ₹
+📊 RMSE (Root Mean Squared Error) — penalizes larger errors
+📊 R² Score — proportion of price variation explained by the model
+
+---
+
+## 5️⃣ Deployment
+
+The trained Random Forest model was saved as a pipeline (`flight_price_pipeline.pkl`) and integrated into the web application for real-time flight price prediction.
+
+---
 
 # 🌐 Website Development Workflow
 
@@ -271,30 +295,23 @@ Integrated the trained model into the application for real-time flight price pre
 
 Created an interactive UI using:
 
-🎨 HTML  
-🎨 CSS  
-⚡ JavaScript  
-
+🎨 HTML
+🎨 CSS
+⚡ JavaScript
 
 ## 2️⃣ Backend Integration
 
 Connected the website with ML model using:
 
-🚀 Flask / Streamlit  
-
+🚀 Flask / Streamlit
 
 ## 3️⃣ Prediction System
 
 Workflow:
 
-User Input  
-↓  
-Web Interface  
-↓  
-ML Model  
-↓  
-Flight Price Prediction  
-
+```
+User Input → Web Interface → Random Forest Model → Flight Price Prediction
+```
 
 ## 4️⃣ Deployment
 
@@ -313,6 +330,8 @@ Deployed the application for real-time user predictions.
 🔹 Popular routes show strong pricing variation.
 
 🔹 Advance booking patterns influence ticket cost.
+
+🔹 Random Forest explains **82.84%** of ticket price variation — demonstrating that pricing is driven by multiple interacting factors, not a single variable.
 
 ---
 
@@ -340,7 +359,6 @@ This project can help:
   <img src="Images/Route_Analysis.png" width="45%">
 </p>
 
-
 ## 🌐 Web Application
 
 <p align="center">
@@ -351,19 +369,11 @@ This project can help:
 
 # 👨‍💻 Author
 
-**Sujii**
+**Sujal Gupta**
+Data Analytics Student | Python • SQL • Power BI • Machine Learning
 
-Data Analytics Portfolio Project
-
-## 👨‍💻 Skills
-
-* 🐍 Python
-* 📊 Data Analysis & Visualization
-* 🗄️ SQL
-* ⚡ Power BI & Business Intelligence
-* 🤖 Machine Learning & Predictive Modeling
-* 🌐 Web Development
-* 🚀 ML Model Deployment
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin)](https://linkedin.com/in/sujal90585)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-black?logo=github)](https://github.com/sujalgupta0008)
 
 ---
 
