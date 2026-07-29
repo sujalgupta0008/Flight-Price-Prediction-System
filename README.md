@@ -39,7 +39,7 @@ The final dashboard provides an interactive experience to understand pricing tre
 # 🎨 Dashboard Preview
 
 <p align="center">
-  <img src="Power BI/Dashboard_Screenshot.png" width="900"/>
+  <img src="Images/Executive_Overview.png" width="900">
 </p>
 
 ### Dashboard Features
