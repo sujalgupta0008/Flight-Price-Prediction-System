@@ -195,6 +195,7 @@ export default function App() {
         <div className="earth-sphere">
           <div className="earth-surface"></div>
           <div className="earth-shade"></div>
+          <div className="earth-rim"></div>
         </div>
       </div>
 
