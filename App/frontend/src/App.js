@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import "./App.css";
 
@@ -59,7 +59,7 @@ export default function App() {
        "Arrival_Hour","Arrival_Minute","Duration_Minutes"].forEach(k => {
         payload[k] = parseInt(payload[k]);
       });
-      const res = await axios.post(${BACKEND_URL}/api/predict, payload);
+      const res = await axios.post(`${BACKEND_URL}/api/predict`, payload);
       setResult(res.data.predicted_price);
     } catch (err) {
       setError(err.response?.data?.detail || "Something went wrong. Please try again.");
@@ -115,7 +115,7 @@ export default function App() {
         {result !== null && (
           <div className="result">
             <p className="result-label">Estimated Flight Price</p>
-            <p className="result-price">₹ {result.toLocaleString("en-IN")}</p>
+            <p className="result-price">&#8377; {result.toLocaleString("en-IN")}</p>
             <p className="result-note">* This is a model prediction based on historical data</p>
           </div>
         )}
