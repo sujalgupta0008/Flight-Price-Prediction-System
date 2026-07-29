@@ -281,6 +281,29 @@ export default function App() {
           </div>
         </div>
 
+        <div className={`middle ${mounted ? "in" : ""}`} aria-hidden="true">
+          <div className="flight-path">
+            <div className="fp-step">
+              <span className="fp-icon">01</span>
+              <span className="fp-text">Enter your route &amp; dates</span>
+            </div>
+            <div className="fp-line">
+              <span className="fp-plane">✈</span>
+            </div>
+            <div className="fp-step">
+              <span className="fp-icon">02</span>
+              <span className="fp-text">Model checks 10,463+ fares</span>
+            </div>
+            <div className="fp-line">
+              <span className="fp-plane fp-plane-b">✈</span>
+            </div>
+            <div className="fp-step">
+              <span className="fp-icon">03</span>
+              <span className="fp-text">Get your instant estimate</span>
+            </div>
+          </div>
+        </div>
+
         <div className="right">
           <div
             className="form-card"
