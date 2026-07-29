@@ -191,6 +191,12 @@ export default function App() {
     <div className="page">
       <div className="bg-grid" aria-hidden="true"></div>
       <div className="bg-glow" aria-hidden="true"></div>
+      <div className="bg-earth" aria-hidden="true">
+        <div className="earth-sphere">
+          <div className="earth-surface"></div>
+          <div className="earth-shade"></div>
+        </div>
+      </div>
 
       <div className="content">
         <div className={`left ${mounted ? "in" : ""}`}>
