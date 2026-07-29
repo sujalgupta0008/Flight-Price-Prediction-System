@@ -100,9 +100,13 @@ function SplitFlap({ text }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text, reduced]);
 
+  const isBoxed = (c) => /[0-9]/.test(c) || c === "₹";
+
   return (
     <div className="split-flap" aria-label={text}>
-      {display.map((c, i) => <span className="flap" key={i}>{c}</span>)}
+      {display.map((c, i) => (
+        <span className={isBoxed(c) ? "flap" : "flap-sep"} key={i}>{c}</span>
+      ))}
     </div>
   );
 }
@@ -213,7 +217,7 @@ export default function App() {
             <div className="divider"></div>
             <div className="stat">
               <span className="stat-num">{r2}</span>
-              <span className="stat-label">R\u00b2 SCORE</span>
+              <span className="stat-label">R² SCORE</span>
             </div>
             <div className="divider"></div>
             <div className="stat">
@@ -225,7 +229,7 @@ export default function App() {
           <div className="map-frame">
             <div className="map-frame-head">
               <span>ROUTE PREVIEW</span>
-              <span className="map-route-code">{srcCode} <i>\u2192</i> {dstCode}</span>
+              <span className="map-route-code">{srcCode} <i>→</i> {dstCode}</span>
             </div>
             <svg className="map-svg" viewBox="0 0 300 340" aria-hidden="true">
               <defs>
@@ -285,7 +289,7 @@ export default function App() {
               </div>
               <div className="route-mini">
                 <span>{srcCode}</span>
-                <span className="route-mini-line"><span className="plane-glyph">\u2708</span></span>
+                <span className="route-mini-line"><span className="plane-glyph">✈</span></span>
                 <span>{dstCode}</span>
               </div>
             </div>
@@ -346,9 +350,9 @@ export default function App() {
 
               <button type="submit" className="predict-btn" disabled={loading}>
                 {loading ? (
-                  <span className="taxi-bar"><span className="taxi-plane">\u2708</span></span>
+                  <span className="taxi-bar"><span className="taxi-plane">✈</span></span>
                 ) : (
-                  <>Predict price <span className="btn-arrow">\u2192</span></>
+                  <>Predict price <span className="btn-arrow">→</span></>
                 )}
               </button>
             </form>
@@ -359,12 +363,12 @@ export default function App() {
                 <div className="result-box">
                   <div className="result-label">Estimated fare</div>
                   <SplitFlap text={priceText} />
-                  <div className="result-note">Based on historical flight data \u00b7 not a guarantee</div>
+                  <div className="result-note">Based on historical flight data · not a guarantee</div>
                 </div>
               )}
             </div>
 
-            {error && <div className="error-box">\u26a0 {error}</div>}
+            {error && <div className="error-box">⚠ {error}</div>}
           </div>
         </div>
       </div>
