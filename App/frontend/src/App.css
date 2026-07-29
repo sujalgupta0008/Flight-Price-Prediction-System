@@ -506,6 +506,19 @@ body {
   background: rgba(0, 0, 0, 0.5);
 }
 
+.flap-sep {
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 8px;
+  height: 40px;
+  padding-bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink-dim);
+}
+
 .result-note { font-size: 0.7rem; color: var(--ink-faint); }
 
 .error-box {
